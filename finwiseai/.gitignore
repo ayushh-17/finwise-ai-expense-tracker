@@ -17,7 +17,7 @@ Thumbs.db
 # Maven
 .mvn/wrapper/maven-wrapper.jar
 
-application.properties
+
 
 application-local.properties
 
