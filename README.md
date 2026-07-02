@@ -1,5 +1,9 @@
 # FinWise AI - Expense Tracker API
 
+🔗 **Live Demo:** [https://finwise-ai-expense-tracker.onrender.com/swagger-ui.html](https://finwise-ai-expense-tracker.onrender.com/swagger-ui.html)
+
+> Note: Hosted on Render's free tier — the app may take 30-60 seconds to wake up on first request.
+
 An AI-powered expense tracking REST API built with Java, Spring Boot, Spring Security, JWT Authentication, and MySQL.
 
 ## Features
@@ -11,6 +15,7 @@ An AI-powered expense tracking REST API built with Java, Spring Boot, Spring Sec
 - 💡 Smart spending insights (month-over-month comparison, top spending category)
 - 🔒 Ownership-based access control (users can only access their own data)
 - 📖 Interactive API documentation via Swagger/OpenAPI
+- - ✅ Unit tested service layer (JUnit 5 + Mockito) — 14 tests covering business logic, security, and edge cases
 
 ## Tech Stack
 
