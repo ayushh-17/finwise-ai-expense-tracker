@@ -2,6 +2,7 @@ package com.ayush.finwiseai.service.impl;
 
 import com.ayush.finwiseai.dto.request.ExpenseRequest;
 import com.ayush.finwiseai.dto.response.ExpenseResponse;
+import com.ayush.finwiseai.dto.response.PagedExpenseResponse;
 import com.ayush.finwiseai.entity.Category;
 import com.ayush.finwiseai.entity.Expense;
 import com.ayush.finwiseai.entity.User;
@@ -10,6 +11,10 @@ import com.ayush.finwiseai.repository.CategoryRepository;
 import com.ayush.finwiseai.repository.ExpenseRepository;
 import com.ayush.finwiseai.service.ExpenseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +50,31 @@ public class ExpenseServiceImpl implements ExpenseService {
                 .stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PagedExpenseResponse getMyExpensesPaged(User currentUser, int page, int size, String sortBy, String sortDirection) {
+
+        Sort sort = sortDirection.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Expense> expensePage = expenseRepository.findByUserId(currentUser.getId(), pageable);
+
+        List<ExpenseResponse> expenseResponses = expensePage.getContent()
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+
+        return new PagedExpenseResponse(
+                expenseResponses,
+                expensePage.getNumber(),
+                expensePage.getTotalPages(),
+                expensePage.getTotalElements(),
+                expensePage.isLast()
+        );
     }
 
     @Override

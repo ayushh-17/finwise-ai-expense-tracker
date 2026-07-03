@@ -2,6 +2,7 @@ package com.ayush.finwiseai.service;
 
 import com.ayush.finwiseai.dto.request.ExpenseRequest;
 import com.ayush.finwiseai.dto.response.ExpenseResponse;
+import com.ayush.finwiseai.dto.response.PagedExpenseResponse;
 import com.ayush.finwiseai.entity.User;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 public interface ExpenseService {
     ExpenseResponse createExpense(ExpenseRequest request, User currentUser);
     List<ExpenseResponse> getMyExpenses(User currentUser);
+    PagedExpenseResponse getMyExpensesPaged(User currentUser, int page, int size, String sortBy, String sortDirection);
     ExpenseResponse getExpenseById(Long id, User currentUser);
     ExpenseResponse updateExpense(Long id, ExpenseRequest request, User currentUser);
     void deleteExpense(Long id, User currentUser);

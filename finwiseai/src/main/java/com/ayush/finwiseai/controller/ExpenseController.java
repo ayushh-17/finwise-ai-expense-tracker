@@ -2,6 +2,7 @@ package com.ayush.finwiseai.controller;
 
 import com.ayush.finwiseai.dto.request.ExpenseRequest;
 import com.ayush.finwiseai.dto.response.ExpenseResponse;
+import com.ayush.finwiseai.dto.response.PagedExpenseResponse;
 import com.ayush.finwiseai.entity.User;
 import com.ayush.finwiseai.service.ExpenseService;
 import jakarta.validation.Valid;
@@ -59,4 +60,15 @@ public class ExpenseController {
         expenseService.deleteExpense(id, currentUser);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/paged")
+    public ResponseEntity<PagedExpenseResponse> getMyExpensesPaged(
+            @AuthenticationPrincipal User currentUser,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "expenseDate") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDirection
+    ) {
+        return ResponseEntity.ok(expenseService.getMyExpensesPaged(currentUser, page, size, sortBy, sortDirection));
+    }
+
 }
